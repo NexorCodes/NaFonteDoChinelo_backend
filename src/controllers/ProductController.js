@@ -9,7 +9,7 @@ module.exports = {
     async list(request, response) {
         const { page = 1 } = request.query
         const products = await Product.find()
-        return response.json(products)
+        return response.json({ error: false, products })
     },
 
     async createProductThumb(request, response) {
