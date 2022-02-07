@@ -11,6 +11,7 @@ const ProductController = require('../controllers/ProductController')
 //Auth Controller
 router.post('/auth/login', AuthController.login)
 router.post('/auth/register', AuthController.register)
+router.get('/user/info', Auth, AuthController.getUser)
 
 //Product controller
 router.get('/products', ProductController.list)
