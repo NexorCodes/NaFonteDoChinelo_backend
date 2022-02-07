@@ -9,7 +9,9 @@ const app = express()
 const database = require('./src/database')
 const router = require('./src/routes')
 
-app.use(helmet())
+app.use(helmet({
+    crossOriginEmbedderPolicy: false,
+  }))
 app.use(compression())
 app.use(cors())
 app.use(express.urlencoded({ extended: false, limit: '50mb' }))
