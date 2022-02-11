@@ -57,10 +57,10 @@ module.exports = {
     },
 
     async createProductInfo (request, response) {
-        const { id, name, normalPrice, promoPrice, description, category, colors, size } = request.body  
+        const { id, name, normalPrice, promoPrice, description, category, stock, colors, size } = request.body  
 
         try {
-            const product = await Product.findOneAndUpdate({ productId: id }, { $set: { name, normalPrice, promoPrice, description, category, colors, size }})
+            const product = await Product.findOneAndUpdate({ productId: id }, { $set: { name, normalPrice, promoPrice, description, category, stock, colors, size }})
             return response.json({ erro: false, product })
             
         } catch (error) {

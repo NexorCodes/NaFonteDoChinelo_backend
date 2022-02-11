@@ -31,6 +31,10 @@ const Product = new Schema({
         type: Array,
     },
 
+    stock: {
+        type: Number,
+    },
+
     thumb: {
         type: String,
     },
