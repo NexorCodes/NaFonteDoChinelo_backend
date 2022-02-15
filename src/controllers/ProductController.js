@@ -14,8 +14,17 @@ module.exports = {
 
     async createProductThumb(request, response) {
         const { id } = request.query
-
+        
         try {
+            var haveProduct = await Product.findOne({ productId: id })
+
+            if(!haveProduct) {
+                await Product.create({
+                    thumb: `/products/${id}/thumb.png`,
+                    productId: id
+                })
+            }
+
             const existPath = fs.existsSync(`./public/products/${id}`)
     
             if(!existPath) {
@@ -26,10 +35,8 @@ module.exports = {
                 await sharp(request.file.path).toFormat('png').toFile(`./public/products/${id}/thumb.png`)
             }
 
-            await Product.create({
-                thumb: `/products/${id}/thumb.png`,
-                productId: id
-            })
+
+
     
             return response.json({ error: false, message: 'Imagem de principal adicionada com sucesso' })
             
@@ -43,6 +50,12 @@ module.exports = {
         const { id } = request.query
         
         try {
+            const existPath = fs.existsSync(`./public/products/${id}`)
+
+            if (!existPath) {
+                fs.mkdirSync(`./public/products/${id}`, { recursive: true })
+            }
+
             request.files.forEach(async (file, i) => {
                 setTimeout(async () => {
                     await sharp(file.path).toFormat('png').toFile(`./public/products/${id}/${i+1}.png`)
@@ -63,6 +76,27 @@ module.exports = {
             const product = await Product.findOneAndUpdate({ productId: id }, { $set: { name, normalPrice, promoPrice, description, category, stock, colors, size }})
             return response.json({ erro: false, product })
             
+        } catch (error) {
+            return response.json({ erro: true, message: error.message })
+        }
+    },
+
+    async deleteProduct(request, response) {
+        const { id } = request.query
+
+        try {
+            const product = await Product.findOneAndDelete({ productId: id })
+            return response.json({ erro: false, message: 'Produto deletado com sucesso' })
+            
+        } catch (error) {
+            return response.json({ erro: true, message: error.message })
+        }
+    },
+
+    async deleteAll(request, response) {
+        try {
+            await Product.deleteMany()
+            return response.json({ erro: false, message: 'Produtos deletados com sucesso' })
         } catch (error) {
             return response.json({ erro: true, message: error.message })
         }

@@ -18,6 +18,8 @@ router.get('/products', ProductController.list)
 router.post('/products/create/createProductThumb', Auth, upload.single('thumb'), ProductController.createProductThumb)
 router.post('/products/create/createProductImages', Auth, upload.array('images'), ProductController.createProductImages)
 router.post('/products/create/createProductInfo', Auth, ProductController.createProductInfo)
+router.delete('/products/deleteAll', Auth, ProductController.deleteAll)
+router.delete('/products/deleteOne', Auth, ProductController.deleteProduct)
 
 //Freight Controller
 router.post('/freight/get_price', FreightController.get)
