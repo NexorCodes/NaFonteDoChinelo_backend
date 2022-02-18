@@ -85,8 +85,12 @@ module.exports = {
         const { id } = request.query
 
         try {
-            const product = await Product.findOneAndDelete({ productId: id })
-            return response.json({ erro: false, message: 'Produto deletado com sucesso' })
+            const product = await Product.findOneAndDelete({ _id: id })
+            if(product) {
+                return response.json({ erro: false, message: 'Produto deletado com sucesso' })
+            }else{
+                return response.json({ erro: true, message: 'Produto não encontrado' })
+            }
             
         } catch (error) {
             return response.json({ erro: true, message: error.message })
