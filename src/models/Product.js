@@ -27,14 +27,6 @@ const Product = new Schema({
         type: String,
     },
 
-    colors: {
-        type: Array,
-    },
-
-    stock: {
-        type: Number,
-    },
-
     thumb: {
         type: String,
     },
@@ -42,11 +34,11 @@ const Product = new Schema({
     images: {
         type: Array,
     },
-    
-    size: {
+
+    variations : {
         type: Array,
     },
-    
+
     register: {
         type: Date,
         default: Date.now
