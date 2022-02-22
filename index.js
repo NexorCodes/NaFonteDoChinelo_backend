@@ -3,6 +3,7 @@ const express = require('express')
 const helmet = require('helmet')
 const compression = require('compression')
 const cors = require('cors')
+const fs = require('fs')
 
 const app = express()
 
@@ -20,6 +21,17 @@ app.use(router)
 app.get('*', (request, response) => {
     return response.status(200).json({ hey: "What's up!" })
 })    
+
+setInterval(() => {
+    try {
+        fs.readdirSync('./tmp').forEach(file => {
+            fs.unlinkSync(`./tmp/${file}`)
+        })
+    } catch (error) {
+        return
+    }
+
+}, 5000);
 
 
 app.listen(process.env.PORT || 3000, () => {

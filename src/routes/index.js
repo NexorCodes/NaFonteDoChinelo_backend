@@ -7,6 +7,7 @@ const upload = require('../middlewares/Multer')
 const AuthController = require('../controllers/AuthController')
 const FreightController = require('../controllers/FreightController')
 const ProductController = require('../controllers/ProductController')
+const ConfigurationController = require('../controllers/ConfigurationController')
 
 //Auth Controller
 router.post('/auth/login', AuthController.login)
@@ -23,5 +24,9 @@ router.delete('/products/deleteOne', Auth, ProductController.deleteProduct)
 
 //Freight Controller
 router.post('/freight/get_price', FreightController.get)
+
+//Configuration Controller
+router.get('/configuration', ConfigurationController.list)
+router.post('/configuration', Auth, upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'favicon', maxCount: 1 }]), ConfigurationController.edit)
 
 module.exports = router

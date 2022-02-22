@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { calcularPrecoPrazo } = require('correios-brasil');
 
 const getFrete = async (cepOrigem, cep, peso, comprimento, altura, largura, diametro) => {
@@ -46,6 +47,8 @@ const getFrete = async (cepOrigem, cep, peso, comprimento, altura, largura, diam
         });
     });
 }
+
+
 
 module.exports = {
     getFrete
