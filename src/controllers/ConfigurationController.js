@@ -25,10 +25,13 @@ module.exports = {
             privacy,
             refund,
             payment,
-            whatsapp,
             showWhatsappChat = false,
             email, 
-            address, 
+            address,
+            instagram,
+            facebook,
+            youtube,
+            whatsapp,
             socialNetworks
          } = request.body
 
@@ -69,10 +72,13 @@ module.exports = {
                     privacy,
                     refund,
                     payment,
-                    whatsapp,
                     showWhatsappChat,
                     email,
                     address,
+                    instagram,
+                    facebook,
+                    youtube,
+                    whatsapp,
                     socialNetworks
                 })
 
@@ -98,10 +104,13 @@ module.exports = {
                     privacy,
                     refund,
                     payment,
-                    whatsapp,
                     showWhatsappChat,
                     email,
                     address,
+                    instagram,
+                    facebook,
+                    youtube,
+                    whatsapp,
                     socialNetworks
                 })
 

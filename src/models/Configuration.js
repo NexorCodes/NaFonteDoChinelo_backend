@@ -76,10 +76,21 @@ const Configuration = new Schema({
         type: String,
     },
 
-    socialNetworks: {
-        type: Array,
+    facebook: {
+        type: String,
     },
 
+    instagram: {
+        type: String,
+    },
+    
+    youtube: {
+        type: String,
+    },
+    
+    whatsapp: {
+        type: String,
+    },
     
     register: {
         type: Date,
