@@ -11,11 +11,27 @@ const Configuration = new Schema({
         type: String,
     },
 
+    slogan: {
+        type: String,
+    },
+
     keyswords: {
         type: String,
     },
 
-    title: {
+    terms: {
+        type: String,
+    },
+
+    privacy: {
+        type: String,
+    },
+
+    refund: {
+        type: String,
+    },
+
+    payment: {
         type: String,
     },
 
@@ -42,9 +58,7 @@ const Configuration = new Schema({
     phone: {
         type: String,
     },
-    whatsapp: {
-        type: String,
-    },
+
     showWhatsappChat: {
         type: Boolean,
         enum: [true, false],

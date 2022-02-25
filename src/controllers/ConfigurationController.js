@@ -9,6 +9,7 @@ module.exports = {
     },
 
     async edit(request, response) {
+
         const { 
             name,
             description,
@@ -61,6 +62,8 @@ module.exports = {
                     address,
                     socialNetworks
                 })
+
+                console.log(request.body)
 
                 return response.json({ error: false, config })
             } catch (error) {
