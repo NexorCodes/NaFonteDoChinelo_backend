@@ -35,6 +35,10 @@ const Configuration = new Schema({
         type: String,
     },
 
+    embedCss: {
+        type: String,
+    },
+
     headerEmbed: {
         type: String,
     },

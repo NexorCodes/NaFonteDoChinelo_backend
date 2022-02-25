@@ -14,11 +14,17 @@ module.exports = {
             name,
             description,
             keyswords,
+            slogan,
             title,
+            embedCss,
             headerEmbed,
             footerEmbed,
             openingHours,
             phone,
+            terms,
+            privacy,
+            refund,
+            payment,
             whatsapp,
             showWhatsappChat = false,
             email, 
@@ -35,10 +41,13 @@ module.exports = {
         if(request.files['logo']) {
             await sharp(request.files['logo'][0].path).toFormat('png').toFile(`./public/logo.png`)
             logo = `/logo.png`
+            await Configuration.updateOne({ logo })
         }
         if(request.files['favicon']) {
             await sharp(request.files['favicon'][0].path).toFormat('png').toFile(`./public/favicon.png`)
             favicon = `/favicon.png`
+            await Configuration.updateOne({ favicon })
+
         }
         
 
@@ -49,13 +58,17 @@ module.exports = {
                     name,
                     description,
                     keyswords,
+                    slogan,
                     title,
+                    embedCss,
                     headerEmbed,
                     footerEmbed,
-                    logo,
-                    favicon,
                     openingHours,
                     phone,
+                    terms,
+                    privacy,
+                    refund,
+                    payment,
                     whatsapp,
                     showWhatsappChat,
                     email,
@@ -63,7 +76,6 @@ module.exports = {
                     socialNetworks
                 })
 
-                console.log(request.body)
 
                 return response.json({ error: false, config })
             } catch (error) {
@@ -77,12 +89,15 @@ module.exports = {
                     description,
                     keyswords,
                     title,
+                    embedCss,
                     headerEmbed,
                     footerEmbed,
-                    logo,
-                    favicon,
                     openingHours,
                     phone,
+                    terms,
+                    privacy,
+                    refund,
+                    payment,
                     whatsapp,
                     showWhatsappChat,
                     email,
