@@ -68,6 +68,10 @@ const Configuration = new Schema({
         enum: [true, false],
     },
 
+    whatsappChatUsers: {
+        type: Array,
+    },
+
     email: {
         type: String,
     },
