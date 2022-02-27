@@ -31,7 +31,7 @@ setInterval(() => {
         return
     }
 
-}, 5000);
+}, 1000*60*60*24);
 
 
 app.listen(process.env.PORT || 3000, () => {
