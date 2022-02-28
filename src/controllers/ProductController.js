@@ -74,10 +74,10 @@ module.exports = {
         
         try {
             const product = await Product.findOneAndUpdate({ productId: id }, { $set: { name, normalPrice, promoPrice, description, category, variations }})
-            return response.json({ erro: false, product })
+            return response.json({ error: false, product })
             
         } catch (error) {
-            return response.json({ erro: true, message: error.message })
+            return response.json({ error: true, message: error.message })
         }
     },
 
@@ -87,22 +87,22 @@ module.exports = {
         try {
             const product = await Product.findOneAndDelete({ productId: id })
             if(product) {
-                return response.json({ erro: false, message: 'Produto deletado com sucesso' })
+                return response.json({ error: false, message: 'Produto deletado com sucesso' })
             }else{
-                return response.json({ erro: true, message: 'Produto não encontrado' })
+                return response.json({ error: true, message: 'Produto não encontrado' })
             }
             
         } catch (error) {
-            return response.json({ erro: true, message: error.message })
+            return response.json({ error: true, message: error.message })
         }
     },
 
     async deleteAll(request, response) {
         try {
             await Product.deleteMany()
-            return response.json({ erro: false, message: 'Produtos deletados com sucesso' })
+            return response.json({ error: false, message: 'Produtos deletados com sucesso' })
         } catch (error) {
-            return response.json({ erro: true, message: error.message })
+            return response.json({ error: true, message: error.message })
         }
     }
     

@@ -19,6 +19,16 @@ const Configuration = new Schema({
         type: String,
     },
 
+    showBanner: {
+        type: Boolean,
+        default: false
+    },
+
+    showTwoImages: {
+        type: Boolean,
+        default: true,
+    },
+
     terms: {
         type: String,
     },

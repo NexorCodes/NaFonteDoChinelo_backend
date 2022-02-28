@@ -12,9 +12,11 @@ module.exports = {
 
         const { 
             name,
+            slogan,
             description,
             keyswords,
-            slogan,
+            showBanner,
+            showTwoImages,
             title,
             embedCss,
             headerEmbed,
@@ -60,9 +62,11 @@ module.exports = {
             try {
                 const config = await Configuration.updateOne({
                     name,
+                    slogan,
                     description,
                     keyswords,
-                    slogan,
+                    showBanner,
+                    showTwoImages,
                     title,
                     embedCss,
                     headerEmbed,
@@ -94,8 +98,11 @@ module.exports = {
             try {
                 const config = await Configuration.create({
                     name,
+                    slogan,
                     description,
                     keyswords,
+                    showBanner,
+                    showTwoImages,
                     title,
                     embedCss,
                     headerEmbed,
