@@ -48,8 +48,43 @@ const getFrete = async (cepOrigem, cep, peso, comprimento, altura, largura, diam
     });
 }
 
+function subtotal(array) {
+    var subtotal = 0
+
+    for(const data of array) {
+        subtotal += parseFloat(data.product.normalPrice) * parseInt(data.quantity)
+        
+    }
+
+    return parseFloat(subtotal).toFixed(2)
+}
+
+function total(array) {
+    var total = 0
+    for(const data of array) {
+        if(data.product.promoPrice != null) {
+            total += parseFloat(data.product.promoPrice) * parseInt(data.quantity)
+        }else{
+            total += parseFloat(data.product.normalPrice) * parseInt(data.quantity)
+        }
+    }
+    return parseFloat(total).toFixed(2)
+
+}
+
+function discount(array) {
+    var discount = 0
+    discount = parseFloat(subtotal(array)) - parseFloat(total(array))
+
+    return parseFloat(discount).toFixed(2)
+}
+
 
 
 module.exports = {
-    getFrete
+    getFrete,
+    discount,
+    subtotal,
+    total,
+
 }

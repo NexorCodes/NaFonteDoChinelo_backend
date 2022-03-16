@@ -8,7 +8,7 @@ const AuthController = require('../controllers/AuthController')
 const FreightController = require('../controllers/FreightController')
 const ProductController = require('../controllers/ProductController')
 const ConfigurationController = require('../controllers/ConfigurationController')
-const PaymentController = require('../controllers/PaymentController')
+const OrderController = require('../controllers/OrderController')
 
 //Auth Controller
 router.post('/auth/login', AuthController.login)
@@ -30,7 +30,7 @@ router.post('/freight/get_price', FreightController.get)
 router.get('/configuration', ConfigurationController.list)
 router.post('/configuration', Auth, upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'favicon', maxCount: 1 }]), ConfigurationController.edit)
 
-router.post('/payment/create', PaymentController.createPayment)
-router.get('/payment/list', PaymentController.listPayments)
+//Order Controller
+router.post('/order/new', OrderController.create)
 
 module.exports = router

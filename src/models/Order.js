@@ -3,42 +3,43 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const Order = new Schema({
-    name: {
+    clientName: {
         type: String,
         required: [true, 'Nome é obrigatório']
     },
-    email: {
+    clientPhone: {
         type: String,
-        required: [true, 'E-mail é obrigatório'],
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: [true, 'Senha é obrigatória'],
-    },
-    photo: {
-        type: String,
-        required: [true, 'Foto é obrigatório']
-    },
-    
-    cpf: {
+        required: [true, 'Telefone é obrigatório']
+    },    
+    clientCpf: {
         type: String,
         required: [true, 'CPF é obrigatório']
     },
-    
-    birthday: {
-        type: String,
-        required: [true, 'Data de Nascimento é obrigatório']
-    },
-    
-    costumerId: {
+    shippingMethod: {
         type: String,
     },
-
+    shippingAddress: {
+        type: Object,
+    },
+    shippingPrice: {
+        type: Number,
+    },
+    shippingType: {
+        type: String,
+    },
+    paymentMethod: {
+        type: String,
+    },
+    products: {
+        type: Array,
+    },
+    total: {
+        type: Number,
+    },
     status: {
         type: String,
-        enun: ['A', 'I', 'P'],
-        default: 'P'
+        enun: ['Pending', 'Paid', 'Canceled'],
+        default: 'Pending'
     },
     
     register: {
