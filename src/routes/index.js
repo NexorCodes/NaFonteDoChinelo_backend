@@ -31,6 +31,9 @@ router.get('/configuration', ConfigurationController.list)
 router.post('/configuration', Auth, upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'favicon', maxCount: 1 }]), ConfigurationController.edit)
 
 //Order Controller
+router.get('/orders/list', Auth, OrderController.list)
+router.get('/order/info', Auth, OrderController.info)
 router.post('/order/new', OrderController.create)
+router.delete('/order/delete', Auth, OrderController.delete)
 
 module.exports = router

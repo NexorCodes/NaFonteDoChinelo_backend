@@ -3,6 +3,18 @@ const { total } = require('../util')
 const { createPayment } = require('../services/gerencianet')
 
 module.exports = {
+    async list(request, response) {
+        const { page = 1 } = request.query
+
+        try {
+            const orders = await Order.paginate({}, { page, limit: 10 })
+            return response.status(200).json(orders)
+        } catch (error) {
+            console.log(error)
+            return response.status(400).json({ error: 'Error loading orders' })            
+        }
+    },
+
     async create(request, response) {
         const {
             clientName,
@@ -14,7 +26,7 @@ module.exports = {
             shippingType,
             paymentMethod,
             products,
-            status = 'pending',
+            status = 'Pending',
         } = request.body
 
         try {
@@ -56,6 +68,30 @@ module.exports = {
             return response.status(400).json({ error: true, message: error.message })
         }
 
+
+    },
+
+    async info(request, response) {
+        const { id } = request.query
+
+        try {
+            const order = await Order.findById(id)
+            return response.status(200).json(order)
+        } catch (error) {
+            return response.status(400).json({ error: true, message: error.message })
+        }
+
+    },
+
+    async delete(request, response) {
+        const { id } = request.query
+        
+        try {
+            const order = await Order.findByIdAndDelete(id)
+            return response.status(200).json(order)
+        } catch (error) {
+            return response.status(400).json({ error: true, message: error.message })
+        }
 
     }
         
