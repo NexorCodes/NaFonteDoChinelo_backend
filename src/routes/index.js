@@ -9,6 +9,7 @@ const FreightController = require('../controllers/FreightController')
 const ProductController = require('../controllers/ProductController')
 const ConfigurationController = require('../controllers/ConfigurationController')
 const OrderController = require('../controllers/OrderController')
+const ClientController = require('../controllers/ClientController')
 
 //Auth Controller
 router.post('/auth/login', AuthController.login)
@@ -34,6 +35,10 @@ router.post('/configuration', Auth, upload.fields([{ name: 'logo', maxCount: 1 }
 router.get('/orders/list', Auth, OrderController.list)
 router.get('/order/info', Auth, OrderController.info)
 router.post('/order/new', OrderController.create)
+router.put('/order/update', Auth, OrderController.update)
 router.delete('/order/delete', Auth, OrderController.delete)
 
+//Client Controller
+router.get('/clients/list', Auth, ClientController.list)
+router.delete('/client/delete', Auth, ClientController.delete)
 module.exports = router

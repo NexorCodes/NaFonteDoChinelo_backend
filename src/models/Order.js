@@ -39,10 +39,9 @@ const Order = new Schema({
     },
     status: {
         type: String,
-        enun: ['Pending', 'Paid', 'Canceled'],
+        enun: ['Pending', 'Paid', 'Canceled', 'Delivered'],
         default: 'Pending'
     },
-    
     register: {
         type: Date,
         default: Date.now

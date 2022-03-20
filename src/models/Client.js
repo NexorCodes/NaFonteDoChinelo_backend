@@ -1,50 +1,32 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const Schema = mongoose.Schema;
 
 const Client = new Schema({
     name: {
         type: String,
-        required: [true, 'Nome é obrigatório']
     },
-    email: {
+    phone: {
         type: String,
-        required: [true, 'E-mail é obrigatório'],
         unique: true,
     },
-    password: {
-        type: String,
-        required: [true, 'Senha é obrigatória'],
-    },
-    photo: {
-        type: String,
-        required: [true, 'Foto é obrigatório']
-    },
-    
     cpf: {
         type: String,
-        required: [true, 'CPF é obrigatório']
     },
-    
-    birthday: {
-        type: String,
-        required: [true, 'Data de Nascimento é obrigatório']
+    totalSpent: {
+        type: Number,
+        default: 0,
     },
-    
-    costumerId: {
-        type: String,
+    lastPurchaseDate: {
+        type: Date,
     },
-
-    status: {
-        type: String,
-        enun: ['A', 'I', 'P'],
-        default: 'P'
-    },
-    
     register: {
         type: Date,
         default: Date.now
     }
 })
+
+Client.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Client', Client)
