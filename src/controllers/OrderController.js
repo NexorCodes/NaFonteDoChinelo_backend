@@ -2,7 +2,7 @@ const Order = require('../models/Order')
 const Client = require('../models/Client')
 
 const { total } = require('../util')
-const { createPayment } = require('../services/gerencianet')
+const { createPayment, getPayment } = require('../services/gerencianet')
 
 module.exports = {
     async list(request, response) {
@@ -10,7 +10,7 @@ module.exports = {
 
         try {
             const orders = await Order.paginate({}, { page, limit: 10, sort: {register: 'desc'} })
-            return response.status(200).json(orders)
+            return response.status(200).json({ error: false, orders })
         } catch (error) {
             console.log(error)
             return response.status(400).json({ error: true, message:'Erro ao carregar a lista de pedidos' })            
@@ -43,20 +43,6 @@ module.exports = {
             }
     
     
-    
-            const order = await Order.create({
-                clientName,
-                clientPhone,
-                clientCpf,
-                shippingMethod,
-                shippingAddress,
-                shippingPrice: shippingPriceCalc,
-                shippingType,
-                paymentMethod,
-                products,
-                total: totalValue,
-                status,
-            })
 
             const client = await Client.findOne({ cpf: clientCpf })
             
@@ -77,15 +63,48 @@ module.exports = {
                     lastPurchaseDate: new Date(),
                 })
             }
+
+            const new_client = await Client.findOne({ cpf: clientCpf })
     
-            if(order && paymentMethod === 'pix') {
+            if(paymentMethod === 'pix') {
                 const payment = await createPayment(clientName, clientCpf, totalValue)
                 session.endSession()
-                return response.json({ error: false, payment })
+                const order = await Order.create({
+                    clientName,
+                    clientPhone,
+                    clientCpf,
+                    shippingMethod,
+                    shippingAddress,
+                    shippingPrice: shippingPriceCalc,
+                    shippingType,
+                    paymentMethod,
+                    products,
+                    total: totalValue,
+                    status,
+                    txId: payment.payment.txid,
+                    qrCode: payment.qrcode.qrcode,
+                    qrCodeImage: payment.qrcode.imagemQrcode,
+                })
+                return response.json({ error: false, payment: payment.payment, qrcode: payment.qrcode, order })
             }
 
+            const order = await Order.create({
+                clientName,
+                clientPhone,
+                clientCpf,
+                shippingMethod,
+                shippingAddress,
+                shippingPrice: shippingPriceCalc,
+                shippingType,
+                paymentMethod,
+                products,
+                total: totalValue,
+                status,
+            })
+
+
             session.endSession()
-            return response.json({ error: false, message: 'Pedido criado com sucesso' })
+            return response.json({ error: false, client: new_client, order })
         } catch (error) {
             return response.status(400).json({ error: true, message: error.message })
         }
@@ -98,7 +117,7 @@ module.exports = {
 
         try {
             const order = await Order.findById(id)
-            return response.status(200).json(order)
+            return response.status(200).json({ error: false, order })
         } catch (error) {
             return response.status(400).json({ error: true, message: error.message })
         }
@@ -120,11 +139,23 @@ module.exports = {
         
         try {
             const order = await Order.findByIdAndDelete(id)
-            return response.status(200).json(order)
+            return response.status(200).json({ error: false, order })
         } catch (error) {
             return response.status(400).json({ error: true, message: error.message })
         }
 
+    },
+
+    async orderDetails(request, response) {
+        const { id } = request.query
+
+        try {
+            const order = await Order.findOne({ "_id": id })
+
+            return response.status(200).json({error: false, order })
+        } catch (error) {
+            return response.status(400).json({ error: true, message: error.message })
+        }
     }
         
 }

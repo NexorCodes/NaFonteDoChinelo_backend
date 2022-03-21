@@ -44,7 +44,7 @@ const createPayment = (clientName, clientCpf, paymentValue) =>{
 
       var data = {
         "calendario": {
-          "expiracao": 3600
+          "expiracao": 60*60*24*2,
         },
         "devedor": {
           "cpf": clientCpf,
@@ -54,7 +54,7 @@ const createPayment = (clientName, clientCpf, paymentValue) =>{
           "original": paymentValue
         },
         "chave": process.env.GERENCIANET_KEY,
-        "solicitacaoPagador": "Teste Compra"
+        "solicitacaoPagador": "Na Fonte dos chinelos"
       }
 
       var txId = uuidv4().split('-').join('')
@@ -86,7 +86,10 @@ const createPayment = (clientName, clientCpf, paymentValue) =>{
 
       const qrcode = await axios(genQrCode).then(qrcode => qrcode.data)
 
-      return resolve(qrcode)
+      return resolve({
+        qrcode: qrcode,
+        payment: payment
+      })
     } catch (error) {
       return reject(error)
     }
@@ -118,4 +121,29 @@ const listPayments = () => {
   })
 }
 
-module.exports = { createPayment, listPayments }
+const getPayment = (txId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const get_token = await axios(config).then(r => r.data)
+      const token = `Bearer ${get_token.access_token}`
+
+      const data = {
+        method: "GET",
+        url: `${process.env.GERENCIANET_BASE_URL}/v2/cob/${txId}`,
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json"
+        },
+        httpsAgent: config.httpsAgent,
+      }
+
+      const payments = await axios(data).then(payments => payments.data)
+      return resolve(payments)
+
+    } catch (error) {
+      return reject(error)
+    }
+  })
+}
+
+module.exports = { createPayment, listPayments, getPayment }

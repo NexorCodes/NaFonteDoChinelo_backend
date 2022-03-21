@@ -42,6 +42,15 @@ const Order = new Schema({
         enun: ['Pending', 'Paid', 'Canceled', 'Delivered'],
         default: 'Pending'
     },
+    txId: {
+        type: String,
+    },
+    qrCode:{
+        type: String,
+    },
+    qrCodeImage: {
+        type: String,
+    },
     register: {
         type: Date,
         default: Date.now

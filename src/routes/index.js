@@ -34,6 +34,7 @@ router.post('/configuration', Auth, upload.fields([{ name: 'logo', maxCount: 1 }
 //Order Controller
 router.get('/orders/list', Auth, OrderController.list)
 router.get('/order/info', Auth, OrderController.info)
+router.get('/order/details', OrderController.orderDetails)
 router.post('/order/new', OrderController.create)
 router.put('/order/update', Auth, OrderController.update)
 router.delete('/order/delete', Auth, OrderController.delete)
