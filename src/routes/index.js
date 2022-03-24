@@ -11,6 +11,46 @@ const ConfigurationController = require('../controllers/ConfigurationController'
 const OrderController = require('../controllers/OrderController')
 const ClientController = require('../controllers/ClientController')
 
+const config_filds = [
+    {
+        name: 'logo', 
+        maxCount: 1
+    },
+    {   
+        name: 'favicon', 
+        maxCount: 1 
+    }, 
+    {
+        name: 'banner1',
+        maxCount: 1
+    }, 
+    {
+        name: 'banner2',
+        maxCount: 1
+    }, 
+    {
+        name: 'banner3',
+        maxCount: 1
+    }, 
+    {
+        name: 'banner4',
+        maxCount: 1
+    }, 
+    {
+        name: 'banner5',
+        maxCount: 1
+    },
+    {
+        name: 'image1',
+        maxCount: 1
+    }, 
+    {
+        name: 'image2',
+        maxCount: 1
+    }
+
+]
+
 //Auth Controller
 router.post('/auth/login', AuthController.login)
 router.post('/auth/register', AuthController.register)
@@ -29,7 +69,8 @@ router.post('/freight/get_price', FreightController.get)
 
 //Configuration Controller
 router.get('/configuration', ConfigurationController.list)
-router.post('/configuration', Auth, upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'favicon', maxCount: 1 }]), ConfigurationController.edit)
+router.post('/configuration', Auth, upload.fields(config_filds), ConfigurationController.edit)
+router.post('/configuration/delete-image', Auth, ConfigurationController.deleteImage)
 
 //Order Controller
 router.get('/orders/list', Auth, OrderController.list)

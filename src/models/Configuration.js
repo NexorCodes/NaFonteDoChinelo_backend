@@ -14,7 +14,7 @@ const Configuration = new Schema({
     slogan: {
         type: String,
     },
-
+    
     keyswords: {
         type: String,
     },
@@ -24,9 +24,37 @@ const Configuration = new Schema({
         default: false
     },
 
+    banner1: {
+        type: String,
+    },
+
+    banner2: {
+        type: String,
+    },
+
+    banner3: {
+        type: String,
+    },
+
+    banner4: {
+        type: String,
+    },
+
+    banner5: {
+        type: String,
+    },
+
     showTwoImages: {
         type: Boolean,
         default: true,
+    },
+
+    image1: {
+        type: String,
+    },
+    
+    image2: {
+        type: String,
     },
 
     terms: {
@@ -80,6 +108,7 @@ const Configuration = new Schema({
 
     whatsappChatUsers: {
         type: Array,
+        default: [{ number: "", name: "", role: "", start: "", end: "" }]
     },
 
     email: {
