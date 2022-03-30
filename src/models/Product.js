@@ -34,11 +34,16 @@ const Product = new Schema({
     images: {
         type: Array,
     },
-
+    offer: {
+        type: Boolean,
+        default: false
+    },
     variations : {
         type: Array,
     },
-
+    categories: {
+        type: Array,
+    },
     register: {
         type: Date,
         default: Date.now

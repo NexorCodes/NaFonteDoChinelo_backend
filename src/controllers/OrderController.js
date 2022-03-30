@@ -1,5 +1,6 @@
 const Order = require('../models/Order')
 const Client = require('../models/Client')
+const Product = require('../models/Product')
 
 const { total } = require('../util')
 const { createPayment, getPayment } = require('../services/gerencianet')
@@ -41,8 +42,6 @@ module.exports = {
                 totalValue = parseFloat(totalValue).toFixed(2)
                 shippingPriceCalc = shippingPrice.value.replace(',', '.')
             }
-    
-    
 
             const client = await Client.findOne({ cpf: clientCpf })
             
@@ -101,6 +100,21 @@ module.exports = {
                 total: totalValue,
                 status,
             })
+
+
+            products.forEach(async product => {
+                product.product.variations.forEach(async variation => {
+                    console.log(variation.quantity)
+                    await Product.updateOne({
+                        _id: product._id,
+                    }, {
+                        $inc: {
+                            'variations.$.quantity': -variation.quantity
+                        }
+                    })
+                })
+            })
+
 
 
             session.endSession()

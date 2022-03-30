@@ -10,6 +10,8 @@ const ProductController = require('../controllers/ProductController')
 const ConfigurationController = require('../controllers/ConfigurationController')
 const OrderController = require('../controllers/OrderController')
 const ClientController = require('../controllers/ClientController')
+const DashboardController = require('../controllers/DashboardController')
+const OfferController = require('../controllers/OfferController')
 
 const config_filds = [
     {
@@ -83,4 +85,17 @@ router.delete('/order/delete', Auth, OrderController.delete)
 //Client Controller
 router.get('/clients/list', Auth, ClientController.list)
 router.delete('/client/delete', Auth, ClientController.delete)
+
+//Dashboard Controller
+router.get('/dashboard', Auth, DashboardController.info)
+
+
+//Offer Controller
+router.get('/offers/list', OfferController.getOffer)
+router.post('/offers/create', Auth, OfferController.addOffer)
+router.delete('/offers/delete', Auth, OfferController.deleteOffer)
+
+
+
+
 module.exports = router

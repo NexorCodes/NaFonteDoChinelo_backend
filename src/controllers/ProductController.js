@@ -3,13 +3,18 @@ const fs = require('fs')
 
 const User = require('../models/User')
 const Product = require('../models/Product')
+const Order = require('../models/Order')
 
 
 module.exports = {
     async list(request, response) {
         const { page = 1 } = request.query
-        const products = await Product.find()
+        const products = await Product.find().sort({ 'register' : 'desc'})
         return response.json({ error: false, products })
+    },
+
+    async listMostSold(request, response) {
+        const orders = await Order.find({})
     },
 
     async createProductThumb(request, response) {
@@ -70,10 +75,10 @@ module.exports = {
     },
 
     async createProductInfo (request, response) {
-        const { id, name, normalPrice, promoPrice, description, category, variations } = request.body  
+        const { id, name, normalPrice, promoPrice, description, category, offer = false, variations } = request.body  
         
         try {
-            const product = await Product.findOneAndUpdate({ productId: id }, { $set: { name, normalPrice, promoPrice, description, category, variations }})
+            const product = await Product.findOneAndUpdate({ productId: id }, { $set: { name, normalPrice, promoPrice, description, offer, category, variations }})
             return response.json({ error: false, product })
             
         } catch (error) {
