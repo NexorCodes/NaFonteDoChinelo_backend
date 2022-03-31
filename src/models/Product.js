@@ -38,6 +38,11 @@ const Product = new Schema({
         type: Boolean,
         default: false
     },
+    highlight: {
+        type: Boolean,
+        default: false
+    },
+
     variations : {
         type: Array,
     },
