@@ -67,7 +67,6 @@ module.exports = {
     
             if(paymentMethod === 'pix') {
                 const payment = await createPayment(clientName, clientCpf, totalValue)
-                session.endSession()
                 const order = await Order.create({
                     clientName,
                     clientPhone,
@@ -103,16 +102,27 @@ module.exports = {
 
 
             products.forEach(async product => {
-                product.product.variations.forEach(async variation => {
-                    console.log(variation.quantity)
-                    await Product.updateOne({
-                        _id: product._id,
-                    }, {
-                        $inc: {
-                            'variations.$.quantity': -variation.quantity
-                        }
-                    })
-                })
+                var size = product.size
+                var quantity = product.quantity
+                var color = product.color
+                var id = product.product._id
+
+               
+                // var product_data = await Product.findOne({ _id: id })
+                // console.log(product_data)
+                // product_data.variations.forEach(async variation => {
+                //     if(variation.size === size && variation.color === color) {
+                //         await Product.updateOne({
+                //             _id: id,
+                //             'variations.size': size,
+                //         }, {
+                //             $inc: {
+                //                 'variations.$.quantity': -quantity,
+                //             }
+                //         })
+                //     }
+                // })
+
             })
 
 
