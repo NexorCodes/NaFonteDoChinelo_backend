@@ -9,6 +9,7 @@ const app = express()
 
 const database = require('./src/database')
 const router = require('./src/routes')
+const cron = require('./src/util/cron')
 
 // app.use(helmet())
 app.use(compression())

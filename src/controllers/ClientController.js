@@ -13,6 +13,26 @@ module.exports = {
         }
     },
 
+    async seachClient(request, response) {
+        const { searchFor, searchForBy } = request.query
+
+        try {
+            if (searchForBy == 'phone') {
+                const client = await Client.find({ phone: { $regex: searchFor, $options: 'i' } }).sort({ 'lastPurchaseDate' : 'desc'})
+                return response.status(200).json(client)
+            } else if (searchForBy == 'client_name') {
+                const client = await Client.find({ name: { $regex: searchFor, $options: 'i' } }).sort({ 'lastPurchaseDate' : 'desc'})
+                return response.status(200).json(client)
+            } else if (searchForBy == 'cpf') {
+                const client = await Client.find({ cpf: { $regex: searchFor, $options: 'i' } }).sort({ 'lastPurchaseDate' : 'desc'})
+                return response.status(200).json(client)
+            }
+        }
+        catch (error) {
+            return response.status(400).json({ error: true, message: 'Erro ao listar clientes' })
+        }
+    },
+
     async delete(request, response) {
         const { id } = request.query
 

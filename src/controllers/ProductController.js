@@ -86,6 +86,12 @@ module.exports = {
         }
     },
 
+    async searchByName(request, response) {
+        const { name } = request.query
+        const products = await Product.find({ name: { $regex: name, $options: 'i' } }).sort({ 'register' : 'desc'})
+        return response.json({ error: false, products })
+    },
+
     async deleteProduct(request, response) {
         const { id } = request.query
 

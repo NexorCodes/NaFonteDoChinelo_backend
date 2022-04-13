@@ -104,7 +104,7 @@ const listPayments = () => {
 
       const data = {
         method: "GET",
-        url: `${process.env.GERENCIANET_BASE_URL}/v2/cob?inicio=${moment().utc(-3).subtract(1, 'days').format()}&fim=${moment().utc(-3).add(1, 'days').format()}`,
+        url: `${process.env.GERENCIANET_BASE_URL}/v2/cob?inicio=${moment().utc(-3).subtract(2, 'days').format()}&fim=${moment().utc(-3).add(2, 'days').format()}`,
         headers: {
           Authorization: token,
           "Content-Type": "application/json"

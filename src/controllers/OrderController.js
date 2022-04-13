@@ -18,6 +18,23 @@ module.exports = {
         }
     },
 
+    async searchOrder(request, response) {
+        const { searchFor, searchForBy } = request.query
+
+        try {
+            if(searchForBy == 'id') {
+                const orders = await Order.find({ _id: searchFor }).sort({ 'register' : 'desc'})
+                return response.status(200).json({ error: false, orders })
+            }else if(searchForBy == 'client_name') {
+                const orders = await Order.find({ clientName: { $regex: searchFor, $options: 'i' } }).sort({ 'register' : 'desc'})
+                return response.status(200).json({ error: false, orders })
+            }
+        } catch (error) {
+            console.log(error)
+            return response.status(400).json({ error: true, message:'Erro ao carregar a lista de pedidos' })            
+        }
+    },
+
     async create(request, response) {
         const {
             clientName,
@@ -34,6 +51,41 @@ module.exports = {
 
         try {
             const session = await Order.startSession()
+
+            for(const productArray of products) {
+                var size = productArray.size
+                var quantity = productArray.quantity
+                var color = productArray.color
+                var id = productArray.product._id
+
+               
+                var product_data = await Product.findOne({ _id: id })
+
+                for(const variation of product_data.variations) {
+                    if(variation.size === size && variation.color === color) {
+                        if(variation.quantity >= quantity) {
+                            const save = async () => {
+                                await Product.updateOne({
+                                    _id: id,
+                                    'variations.size': size,
+                                }, {
+                                    $inc: {
+                                        'variations.$.quantity': -quantity,
+                                    }
+                                })
+                            }
+                            save()
+                        }else{
+                            return response.status(400).json({ error: true, message: `Só temos mais ${variation.quantity} unidade${variation.quantity > 1 ? 's' : ''} disponíve${variation.quantity > 1 ? 'is' : 'l' } do produto ${productArray.product.name}. Remova ${quantity-variation.quantity} do carrinho e tente novamente.` })
+
+                        }
+                    }
+                }
+
+
+            }
+            
+
             
             var totalValue = total(products)
             var shippingPriceCalc = null
@@ -99,33 +151,6 @@ module.exports = {
                 total: totalValue,
                 status,
             })
-
-
-            products.forEach(async product => {
-                var size = product.size
-                var quantity = product.quantity
-                var color = product.color
-                var id = product.product._id
-
-               
-                // var product_data = await Product.findOne({ _id: id })
-                // console.log(product_data)
-                // product_data.variations.forEach(async variation => {
-                //     if(variation.size === size && variation.color === color) {
-                //         await Product.updateOne({
-                //             _id: id,
-                //             'variations.size': size,
-                //         }, {
-                //             $inc: {
-                //                 'variations.$.quantity': -quantity,
-                //             }
-                //         })
-                //     }
-                // })
-
-            })
-
-
 
             session.endSession()
             return response.json({ error: false, client: new_client, order })

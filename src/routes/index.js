@@ -60,6 +60,7 @@ router.get('/user/info', Auth, AuthController.getUser)
 
 //Product controller
 router.get('/products', ProductController.list)
+router.get('/products/search', ProductController.searchByName)
 router.post('/products/create/createProductThumb', Auth, upload.single('thumb'), ProductController.createProductThumb)
 router.post('/products/create/createProductImages', Auth, upload.array('images'), ProductController.createProductImages)
 router.post('/products/create/createProductInfo', Auth, ProductController.createProductInfo)
@@ -76,6 +77,7 @@ router.post('/configuration/delete-image', Auth, ConfigurationController.deleteI
 
 //Order Controller
 router.get('/orders/list', Auth, OrderController.list)
+router.get('/order/search', Auth, OrderController.searchOrder)
 router.get('/order/info', Auth, OrderController.info)
 router.get('/order/details', OrderController.orderDetails)
 router.post('/order/new', OrderController.create)
@@ -84,6 +86,7 @@ router.delete('/order/delete', Auth, OrderController.delete)
 
 //Client Controller
 router.get('/clients/list', Auth, ClientController.list)
+router.get('/client/search', Auth, ClientController.seachClient)
 router.delete('/client/delete', Auth, ClientController.delete)
 
 //Dashboard Controller
