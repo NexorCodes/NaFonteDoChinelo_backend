@@ -1,5 +1,20 @@
 const fs = require('fs');
+var CryptoJS = require("crypto-js");
 const { calcularPrecoPrazo } = require('correios-brasil');
+
+
+
+function encrypt(text) {
+    return CryptoJS.AES.encrypt(text, process.env.ENCRYPT_KEY).toString();
+}
+
+
+function decrypt(text) {
+    var bytes  = CryptoJS.AES.decrypt(text, process.env.ENCRYPT_KEY);
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    return originalText
+}
+
 
 const getFrete = async (cepOrigem, cep, peso, comprimento, altura, largura, diametro) => {
     return new Promise((resolve, reject) => {
@@ -86,5 +101,7 @@ module.exports = {
     discount,
     subtotal,
     total,
+    encrypt,
+    decrypt
 
 }

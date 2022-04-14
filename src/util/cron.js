@@ -13,11 +13,13 @@ const interval = setInterval(async () => {
         status: 'Pending'
     })
     for(const order of orders) {
-        const payment = await getPayment(order.txId)
-        if(payment.status === 'CONCLUIDA') {
-            Order.updateOne({ _id: order._id }, { status: 'Paid' })
+        if(order.txId) {
+            const payment = await getPayment(order.txId)
+            if(payment.status === 'CONCLUIDA') {
+                Order.updateOne({ _id: order._id }, { status: 'Paid' })
+            }
         }
     }
-}, 1000*120)
+}, 1000*10)
 
 module.exports = interval
