@@ -9,7 +9,6 @@ const Client = new Schema({
     },
     phone: {
         type: String,
-        unique: true,
     },
     cpf: {
         type: String,

@@ -76,13 +76,27 @@ function subtotal(array) {
 
 function total(array) {
     var total = 0
-    for(const data of array) {
-        if(data.product.promoPrice != null) {
+    array.forEach(data => {
+        if(data.product.wholesalePrice) {
+            if(data.product.wholesaleMinQuantity){
+                if(data.quantity >= data.product.wholesaleMinQuantity) {
+                    total += parseFloat(data.product.wholesalePrice) * parseInt(data.quantity)
+                }else if(data.product.promoPrice != null) {
+                    total += parseFloat(data.product.promoPrice) * parseInt(data.quantity)
+                }else{
+                    total += parseFloat(data.product.normalPrice) * parseInt(data.quantity)
+                }
+            }else if(data.product.promoPrice != null) {
+                total += parseFloat(data.product.promoPrice) * parseInt(data.quantity)
+            }else{
+                total += parseFloat(data.product.normalPrice) * parseInt(data.quantity)
+            }
+        }else if(data.product.promoPrice != null) {
             total += parseFloat(data.product.promoPrice) * parseInt(data.quantity)
         }else{
             total += parseFloat(data.product.normalPrice) * parseInt(data.quantity)
         }
-    }
+    })
     return parseFloat(total).toFixed(2)
 
 }

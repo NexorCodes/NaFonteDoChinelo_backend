@@ -18,7 +18,14 @@ const Product = new Schema({
     promoPrice: {
         type: Number,
     },
-
+    wholesalePrice: {
+        type: Number,
+        default: 0
+    },
+    wholesaleMinQuantity: {
+        type: Number,
+        default: 0
+    },
     description: {
         type: String,
     },
