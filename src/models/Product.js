@@ -18,10 +18,12 @@ const Product = new Schema({
     promoPrice: {
         type: Number,
     },
+
     wholesalePrice: {
         type: Number,
         default: 0
     },
+
     wholesaleMinQuantity: {
         type: Number,
         default: 0
@@ -41,7 +43,17 @@ const Product = new Schema({
     images: {
         type: Array,
     },
-    offer: {
+    offer1: {
+        type: Boolean,
+        default: false
+    },
+
+    offer2: {
+        type: Boolean,
+        default: false
+    },
+
+    offer3: {
         type: Boolean,
         default: false
     },

@@ -75,10 +75,10 @@ module.exports = {
     },
 
     async createProductInfo (request, response) {
-        const { id, name, normalPrice, promoPrice, description, wholesalePrice, wholesaleMinQuantity, category, offer = false, highlight, variations } = request.body  
+        const { id, name, normalPrice, promoPrice, description, wholesalePrice, wholesaleMinQuantity, category, offer1 = false, offer2 = false, offer3 = false, highlight, variations } = request.body  
         
         try {
-            const product = await Product.findOneAndUpdate({ productId: id }, { $set: { name, normalPrice, promoPrice, description, wholesalePrice, wholesaleMinQuantity, offer, highlight, category, variations }})
+            const product = await Product.findOneAndUpdate({ productId: id }, { $set: { name, normalPrice, promoPrice, description, wholesalePrice, wholesaleMinQuantity, offer1, offer2, offer3, highlight, category, variations }})
             return response.json({ error: false, product })
             
         } catch (error) {

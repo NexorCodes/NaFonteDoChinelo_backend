@@ -96,7 +96,7 @@ router.get('/dashboard', Auth, DashboardController.info)
 //Offer Controller
 router.get('/offers/list', OfferController.getOffer)
 router.post('/offers/create', Auth, OfferController.addOffer)
-router.delete('/offers/delete', Auth, OfferController.deleteOffer)
+router.delete('/offers/deleteAll', Auth, OfferController.deleteOfferAll)
 
 
 
